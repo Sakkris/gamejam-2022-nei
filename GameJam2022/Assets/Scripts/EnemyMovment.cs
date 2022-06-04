@@ -74,23 +74,25 @@ public class EnemyMovment : MonoBehaviour {
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
     }
 
-
-
+    public void SetTarget(Transform target)
+    {
+        this.target = target;
+    }
+    /*
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Player") && target == null)
         {
-            //Debug.Log("Here");
             target = col.transform;
         }
     }
+    */
 
     private void OnCollisionEnter2D(Collision2D col)
     {
         exited = false;
         if (col.gameObject.CompareTag("Player"))
         {
-            print(exited);
             StartCoroutine(TimerToAttack(col));
         }
     }
@@ -105,6 +107,7 @@ public class EnemyMovment : MonoBehaviour {
 
     IEnumerator Die()
     {
+        yield return new WaitForSeconds(0.5f);
         Manager.instance.enemyDeath();
         speed = 0;
         GetComponent<Animator>().speed = 0;
@@ -116,11 +119,14 @@ public class EnemyMovment : MonoBehaviour {
     IEnumerator TimerToAttack(Collision2D col)
     {
         print(exited);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
         if(!exited){
             animator.SetTrigger("Attack");
             target = col.transform;
-            col.transform.Find("Player").GetComponent<PlayerHealth>().GiveDamage(1);
+            if(col.transform.Find("Player").GetComponent<PlayerHealth>() != null)
+            {
+                col.transform.Find("Player").GetComponent<PlayerHealth>().GiveDamage(1);
+            }
         }
     }
 }

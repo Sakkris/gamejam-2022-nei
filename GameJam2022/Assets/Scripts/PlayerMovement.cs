@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movementPlayer;
     float saveMovementSpeed;
     bool ableToAttack = true;
+    float savedSpeed;
 
     public enum Facing
     {
@@ -94,8 +95,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void setMovementSpeed(float newSpeed)
     {
+        this.savedSpeed = movementSpeed;
         this.movementSpeed = newSpeed;
     }
+    public void ResetMovSpeed()
+    {
+        this.movementSpeed = savedSpeed;
+    }
+
     public void setIsDoingAction(bool isMine)
     {
         this.isDoingAction = isMine;

@@ -44,31 +44,34 @@ public class AttackPosition : MonoBehaviour
     private void HandleAttack()
     {
         StartCoroutine(WaitTime());
+        
+    }
+    IEnumerator WaitTime()
+    {
+        ableToAttack = false;
+        mainCharacter.GetComponent<PlayerMovement>().setMovementSpeed(0.5f);
+        mainCharacter.GetComponent<Animator>().SetTrigger("Attack");
+        yield return new WaitForSeconds(0.80f);
         Collider2D[] objectsInRadious = Physics2D.OverlapCircleAll(thisPosition.position, attackRange, layerMask);
-
         float shortestDistance = 1000000;
-        Collider2D shortestObject= null;
+        Collider2D shortestObject = null;
         foreach (Collider2D objectInRadious in objectsInRadious)
         {
             float distance = Vector3.Distance(gameObject.transform.position, objectInRadious.transform.position);
-            if(distance < shortestDistance)
+            if (distance < shortestDistance)
             {
                 shortestDistance = distance;
                 shortestObject = objectInRadious;
             }
         }
-        if(shortestObject != null)
+        if (shortestObject != null)
         {
             if (shortestObject.CompareTag("Zombie"))
             {
                 shortestObject.GetComponent<EnemyMovment>().Damage(1);
             }
         }
-    }
-    IEnumerator WaitTime()
-    {
-        ableToAttack = false;
-        yield return new WaitForSeconds(0.80f);
+        mainCharacter.GetComponent<PlayerMovement>().ResetMovSpeed();
         ableToAttack = true;
     }
 
