@@ -5,7 +5,9 @@ public class Manager : MonoBehaviour
 {
 	public static Manager instance = null;
 	public GameObject enemy;
-	
+	public Range xRange;
+	public Range yRange;
+
 	public int score = 0;
 	private int score_per_second = 500;
 	private int score_per_enemy = 20000;
