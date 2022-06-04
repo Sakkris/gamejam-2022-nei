@@ -5,8 +5,8 @@ public class Manager : MonoBehaviour
 {
 	public static Manager instance = null;
 	public GameObject enemy;
-	public Range xRange;
-	public Range yRange;
+	public Transform Min;
+	public Transform Max;
 
 	public int score = 0;
 	private int score_per_second = 500;
@@ -45,7 +45,7 @@ public class Manager : MonoBehaviour
 
 	private void Spawn_Enemies()
 	{
-		//Not sure yet how this method should be done
+		Instantiate(enemy, new Vector2(Random.Range(Min.position.x, Max.position.x), Random.Range(Min.position.y, Max.position.y)), Quaternion.identity);
 	}
 }
 
