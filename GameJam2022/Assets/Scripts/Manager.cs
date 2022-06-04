@@ -10,7 +10,7 @@ public class Manager : MonoBehaviour
 	public int score = 0;
 
 	private int score_per_second = 500;
-	private int score_per_enemy = 20000;
+	private int score_per_enemy = 2000;
 	private int numberSpawns = 2;
 
 	void Awake()
