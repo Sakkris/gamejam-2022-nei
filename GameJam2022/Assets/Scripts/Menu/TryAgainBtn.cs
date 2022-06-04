@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class TryAgainBtn :MonoBehaviour
 {
-    [SerializeField] Scene gameScne;
+    [SerializeField] string gameSceneName;
     public void TryAgain()
     {
         Debug.Log("btnPress");
-        SceneManager.LoadScene(gameScne.name);
+        SceneManager.LoadScene(gameSceneName);
     }
 }
