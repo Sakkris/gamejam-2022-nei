@@ -20,7 +20,7 @@ public class EnemyMovment : MonoBehaviour {
         }
         else
         {
-            if(cooldown <= 0) {
+            if(cooldown <= 0) {     
                 lastPosition = new Vector2(Random.Range(-90, 90), Random.Range(-90, 90));
                 transform.position = Vector3.MoveTowards(transform.position, lastPosition, speed * Time.deltaTime); 
                     
@@ -38,7 +38,7 @@ public class EnemyMovment : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player"))
+        if (col.gameObject.CompareTag("Player") && target == null)
         {
             Debug.Log("Here");
             target = col.transform;
@@ -49,7 +49,8 @@ public class EnemyMovment : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            Debug.Log("Hit an enemy");
+            target = col.transform;
+            col.transform.Find("Player").GetComponent<PlayerHealth>().GiveDamage(1);
         }
     }
 
