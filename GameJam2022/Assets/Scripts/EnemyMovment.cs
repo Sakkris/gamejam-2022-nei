@@ -15,6 +15,11 @@ public class EnemyMovment : MonoBehaviour {
 
     void Update ()
     {
+        Debug.Log(rb.velocity.magnitude);
+        if (rb.velocity.magnitude > 1.5 * speed)
+        {
+            rb.velocity = new Vector2(0f, 0f);
+        }
         if (target != null)
         {
             Flip(transform.position.x - target.position.x);

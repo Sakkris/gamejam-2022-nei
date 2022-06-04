@@ -7,6 +7,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] int maxHealth = 3;
     [SerializeField] HealthHearts healthHearts;
     private HealthSystem health;
+    private float invul_time = 1;
+    private float invul_cooldown;
     
     void Start()
     {
@@ -29,12 +31,19 @@ public class PlayerHealth : MonoBehaviour
             takeDamageUI();
         }
 
+        if(invul_cooldown > 0)
+        {
+            invul_cooldown -= Time.deltaTime;
+        }
     }
 
     public void GiveDamage(int i)
     {
-        health.GiveDamage(i);
-        takeDamageUI();
+        if(invul_cooldown <= 0) { 
+            health.GiveDamage(i);
+            takeDamageUI();
+            invul_cooldown = invul_time;
+        }
     }
 
 
