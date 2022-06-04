@@ -17,7 +17,6 @@ public class AttackPosition : MonoBehaviour
         parentPosition = gameObject.transform.parent;
         thisPosition.position = parentPosition.position + new Vector3(0.7f, 0, 0);
         string facing = mainCharacter.GetComponent<PlayerMovement>().getFacing();
-        print(facing);
         transformPosition(facing);
 
         if (Input.GetMouseButtonDown(0) && ableToAttack) { HandleAttack();}

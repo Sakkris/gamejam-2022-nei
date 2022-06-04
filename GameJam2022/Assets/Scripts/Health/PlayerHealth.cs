@@ -5,36 +5,35 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int maxHealth = 3;
-    [SerializeField] HealthBar healthBar;
+    [SerializeField] HealthHearts healthHearts;
     private HealthSystem health;
     
     void Start()
     {
         health = new HealthSystem(maxHealth);
-        if (healthBar != null)
+        if (healthHearts != null)
         {
-            healthBar.setMaxHealth(maxHealth);
+            healthHearts.SetMaxHealth(maxHealth);
         }
     }
 
     void Update()
     {
-        if(health.getHealth() <= 0)
+        if (health.getHealth() <= 0)
         {
-            //DEAD
+            Debug.Log("Dead");
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        else if (Input.GetKeyDown(KeyCode.Space))
         {
             health.GiveDamage(1);
             takeDamageUI();
         }
-        */
+
     }
 
     void takeDamageUI()
     {
-        healthBar.setHealth(health.getHealth());
+        healthHearts.SetHealth(health.getHealth());
     }
 
     
