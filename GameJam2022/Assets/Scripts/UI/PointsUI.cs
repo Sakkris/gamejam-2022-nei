@@ -12,7 +12,6 @@ public class PointsUI : MonoBehaviour
     {
         int score = Manager.instance.score;
         string scoreString = score.ToString();
-        print(score);
         int missingN = numbers - scoreString.Length;
         for(int i = 0; i<missingN; i++)
         {

@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 1872714869751970946}
   - component: {fileID: 1872714869751970945}
   - component: {fileID: 1872714869751970944}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,6 +166,7 @@ MonoBehaviour:
   speed: 0.5
   rb: {fileID: 1872714869751970944}
   animator: {fileID: 1872714869751970948}
+  material: {fileID: 2100000, guid: 05a36b182f97dac45a88f6f71325339c, type: 2}
 --- !u!50 &1872714869751970944
 Rigidbody2D:
   serializedVersion: 4

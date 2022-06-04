@@ -25,11 +25,6 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.Log("Dead");
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            health.GiveDamage(1);
-            takeDamageUI();
-        }
 
         if(invul_cooldown > 0)
         {

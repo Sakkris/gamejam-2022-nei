@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class EnemyMovment : MonoBehaviour {
@@ -12,10 +13,18 @@ public class EnemyMovment : MonoBehaviour {
     private float movementCooldown = 2;
     private float cooldown = 0;
     Vector3 lastPosition;
+    bool exited = false;
 
+    private HealthSystem health;
+    [SerializeField] Material material;
+
+    private void Awake()
+    {
+        health = new HealthSystem(1);
+    }
     void Update ()
     {
-        Debug.Log(rb.velocity.magnitude);
+        //Debug.Log(rb.velocity.magnitude);
         if (rb.velocity.magnitude > 1.5 * speed)
         {
             rb.velocity = new Vector2(0f, 0f);
@@ -42,6 +51,19 @@ public class EnemyMovment : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, lastPosition, speed * Time.deltaTime);
             }
         }
+        CheckHealth();
+    }
+    
+    private void CheckHealth()
+    {
+        if(health.getHealth()<= 0)
+        {
+            StartCoroutine(Die());
+        }
+    }
+    public void Damage(int i)
+    {
+        health.GiveDamage(i);
     }
 
     private void Flip(float x)
@@ -58,24 +80,47 @@ public class EnemyMovment : MonoBehaviour {
     {
         if (col.gameObject.CompareTag("Player") && target == null)
         {
-            Debug.Log("Here");
+            //Debug.Log("Here");
             target = col.transform;
         }
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Player")
+        exited = false;
+        if (col.gameObject.CompareTag("Player"))
         {
+            print(exited);
+            StartCoroutine(TimerToAttack(col));
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            exited = true;
+        }
+    }
+
+    IEnumerator Die()
+    {
+        Manager.instance.enemyDeath();
+        speed = 0;
+        GetComponent<Animator>().speed = 0;
+        gameObject.GetComponent<SpriteRenderer>().material = material;
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
+
+    IEnumerator TimerToAttack(Collision2D col)
+    {
+        print(exited);
+        yield return new WaitForSeconds(0.2f);
+        if(!exited){
             animator.SetTrigger("Attack");
             target = col.transform;
             col.transform.Find("Player").GetComponent<PlayerHealth>().GiveDamage(1);
         }
-    }
-
-    public void Die()
-    {
-        Manager.instance.enemyDeath();
-        Destroy(gameObject);
     }
 }

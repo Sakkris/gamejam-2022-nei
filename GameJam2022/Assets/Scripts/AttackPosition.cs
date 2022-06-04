@@ -19,7 +19,7 @@ public class AttackPosition : MonoBehaviour
         string facing = mainCharacter.GetComponent<PlayerMovement>().getFacing();
         transformPosition(facing);
 
-        if (Input.GetMouseButtonDown(0) && ableToAttack) { HandleAttack();}
+        if (Input.GetKeyDown(KeyCode.Space) && ableToAttack) { HandleAttack();}
     }
 
     private void transformPosition(string facing)
@@ -59,8 +59,10 @@ public class AttackPosition : MonoBehaviour
         }
         if(shortestObject != null)
         {
-           //GIVE DAMAGE
-       
+            if (shortestObject.CompareTag("Zombie"))
+            {
+                shortestObject.GetComponent<EnemyMovment>().Damage(1);
+            }
         }
     }
     IEnumerator WaitTime()
@@ -68,7 +70,6 @@ public class AttackPosition : MonoBehaviour
         ableToAttack = false;
         yield return new WaitForSeconds(0.80f);
         ableToAttack = true;
-
     }
 
     private void OnDrawGizmosSelected()
