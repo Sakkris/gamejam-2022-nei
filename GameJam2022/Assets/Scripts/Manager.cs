@@ -29,7 +29,7 @@ public class Manager : MonoBehaviour
 	void InitGame()
 	{
 		score = 0;
-		InvokeRepeating("Spawn_Enemies", 0.0f, 5f);
+		InvokeRepeating("Spawn_Enemies", 0.0f, 7.5f);
 
 	}
 
@@ -45,7 +45,7 @@ public class Manager : MonoBehaviour
 
 	private void Spawn_Enemies()
 	{
-		for (int i = 0; i < numberSpawns/2; i++) {
+		for (int i = 0; i < Mathf.Log(numberSpawns); i++) {
 			bool found = true;
 			Vector2 spawnPosition = new Vector2(0, 0);
 
