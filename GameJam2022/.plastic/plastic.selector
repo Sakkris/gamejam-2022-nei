@@ -1,0 +1,4 @@
+repository "GameJam2022@JoniLagostin@cloud"
+  path "/"
+    br "/main"
+    co "/main"
