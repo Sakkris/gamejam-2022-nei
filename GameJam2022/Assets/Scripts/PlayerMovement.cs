@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rbPlayer;
     [SerializeField] Animator animator;
@@ -20,14 +20,13 @@ public class Movement : MonoBehaviour
         East,
         North,
         South
-    }
+   }
     public static Facing CurrentFacing { get; private set; }
     void Update()
     {
-
+        transform.rotation = new Quaternion(0, 0, 0, 0);
         movementPlayer.x = Input.GetAxisRaw("Horizontal");
         movementPlayer.y = Input.GetAxisRaw("Vertical");
-
 
         animator.SetFloat("Horizontal", movementPlayer.x);
         animator.SetFloat("Vertical", movementPlayer.y);
@@ -37,13 +36,13 @@ public class Movement : MonoBehaviour
         lastKey = key;
 
         if (Input.GetMouseButtonDown(0))
-        {
+            {
             if (ableToAttack)
             {
-                //Atackt
+                //ATCK
             }
         }
-
+         
     }
 
     public void ChangeAbleToAttack()
@@ -58,13 +57,14 @@ public class Movement : MonoBehaviour
 
     Vector2 calculateSpeed()
     {
-        return movementPlayer * movementSpeed * Time.fixedDeltaTime * isMoving;
+            return movementPlayer * movementSpeed * Time.fixedDeltaTime * isMoving;
     }
 
+ 
 
     public float getLastMovementKey(float lastKey)
     {
-        if (isDoingAction == true)
+        if(isDoingAction == true)
         {
             return lastKey;
         }
@@ -118,7 +118,7 @@ public class Movement : MonoBehaviour
 
     public void DeactivateOrActivate()
     {
-        if (this.enabled == true)
+        if(this.enabled == true)
         {
             saveMovementSpeed = movementSpeed;
             animator.SetFloat("Speed", 0);
@@ -130,9 +130,10 @@ public class Movement : MonoBehaviour
             this.enabled = true;
         }
 
-
+        
     }
 
 
-}
+
+}   
 
