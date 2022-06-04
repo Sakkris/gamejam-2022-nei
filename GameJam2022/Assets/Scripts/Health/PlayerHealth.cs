@@ -31,6 +31,13 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
+    void GiveDamage(int i)
+    {
+        health.GiveDamage(i);
+        takeDamageUI();
+    }
+
+
     void takeDamageUI()
     {
         healthHearts.SetHealth(health.getHealth());
