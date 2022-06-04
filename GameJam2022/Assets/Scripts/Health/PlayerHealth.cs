@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    void GiveDamage(int i)
+    public void GiveDamage(int i)
     {
         health.GiveDamage(i);
         takeDamageUI();

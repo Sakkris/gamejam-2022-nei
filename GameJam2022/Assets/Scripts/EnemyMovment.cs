@@ -5,7 +5,9 @@ public class EnemyMovment : MonoBehaviour {
 
     public float speed = 10.0f;
     public Rigidbody2D rb;
+    public Animator animator;
 
+    private bool side = true;
     private Transform target;
     private float movementCooldown = 2;
     private float cooldown = 0;
@@ -15,13 +17,16 @@ public class EnemyMovment : MonoBehaviour {
     {
         if (target != null)
         {
+            Flip(transform.position.x - target.position.x);
             transform.position =
                 Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            
         }
         else
         {
-            if(cooldown <= 0) {
+            if(cooldown <= 0) {     
                 lastPosition = new Vector2(Random.Range(-90, 90), Random.Range(-90, 90));
+                Flip(transform.position.x - lastPosition.x);
                 transform.position = Vector3.MoveTowards(transform.position, lastPosition, speed * Time.deltaTime); 
                     
                 cooldown = movementCooldown;
@@ -34,11 +39,19 @@ public class EnemyMovment : MonoBehaviour {
         }
     }
 
+    private void Flip(float x)
+    {
+        if ( x > 0 || !side)
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
+        else if (x < 0 || !side)
+            gameObject.GetComponent<SpriteRenderer>().flipX = false;
+    }
+
 
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player"))
+        if (col.gameObject.CompareTag("Player") && target == null)
         {
             Debug.Log("Here");
             target = col.transform;
@@ -49,7 +62,9 @@ public class EnemyMovment : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            Debug.Log("Hit an enemy");
+            animator.SetTrigger("Attack");
+            target = col.transform;
+            col.transform.Find("Player").GetComponent<PlayerHealth>().GiveDamage(1);
         }
     }
 
