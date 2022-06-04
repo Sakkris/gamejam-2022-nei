@@ -3,14 +3,10 @@ using UnityEngine.SocialPlatforms;
 
 public class Manager : MonoBehaviour
 {
-	
-		
-		
 	public static Manager instance = null;
 	public GameObject enemy;
 	
-	
-	private int score = 0;
+	public int score = 0;
 	private int score_per_second = 500;
 	private int score_per_enemy = 20000;
 
