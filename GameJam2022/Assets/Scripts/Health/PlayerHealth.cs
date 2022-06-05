@@ -44,6 +44,19 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void GiveHealth(int i)
+    {
+        if (health.getHealth() == maxHealth)
+            return;
+
+        if (invul_cooldown <= 0)
+        {
+            health.setHealth(health.getHealth() + i);
+            takeDamageUI();
+            invul_cooldown = invul_time;
+        }
+    }
+
 
     void takeDamageUI()
     {
