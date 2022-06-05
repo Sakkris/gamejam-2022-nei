@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] float movementSpeed = 5f;
     [SerializeField] float speedMultiplier = 1.5f;
+    [SerializeField] AudioSource SpeedpickUpSound;
     bool isDoingAction = false;
     short isMoving = 1;
     float lastKey = 0;
@@ -143,13 +144,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void SpeedPowerup()
     {
-        StartCoroutine("speedup");
+        SpeedpickUpSound.Play();
+        StartCoroutine(speedup());
     }
 
-    IEnumerable speedup()
+    IEnumerator speedup()
     {
         movementSpeed *= speedMultiplier;
-        yield return 15f;
+        yield return new WaitForSeconds( 15f);
         movementSpeed /= speedMultiplier;
     }
 }   
