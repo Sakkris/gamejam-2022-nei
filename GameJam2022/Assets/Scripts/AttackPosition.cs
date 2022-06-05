@@ -51,6 +51,7 @@ public class AttackPosition : MonoBehaviour
         ableToAttack = false;
         mainCharacter.GetComponent<PlayerMovement>().setMovementSpeed(0.5f);
         mainCharacter.GetComponent<Animator>().SetTrigger("Attack");
+        string facing = mainCharacter.GetComponent<PlayerMovement>().getFacing();
         yield return new WaitForSeconds(0.80f);
         Collider2D[] objectsInRadious = Physics2D.OverlapCircleAll(thisPosition.position, attackRange, layerMask);
         float shortestDistance = 1000000;
@@ -68,7 +69,7 @@ public class AttackPosition : MonoBehaviour
         {
             if (shortestObject.CompareTag("Zombie"))
             {
-                shortestObject.GetComponent<EnemyMovment>().Damage(1);
+                shortestObject.GetComponent<EnemyMovment>().Damage(1, facing);
             }
         }
         mainCharacter.GetComponent<PlayerMovement>().ResetMovSpeed();

@@ -16,7 +16,6 @@ public class HealthHearts : MonoBehaviour
             Destroy(hearts.transform.GetChild(i).gameObject);
         }
         int noHealthHears = maxHealth - health;
-        Debug.Log(noHealthHears);
 
         int lastPos = 0;
         for(int i = 0; i< health; i++)
