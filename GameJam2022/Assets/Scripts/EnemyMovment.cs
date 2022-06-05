@@ -119,12 +119,12 @@ public class EnemyMovment : MonoBehaviour {
     IEnumerator TimerToAttack(Collision2D col)
     {
         print(exited);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.55f);
         if(!exited){
-            animator.SetTrigger("Attack");
-            target = col.transform;
-            if(col.transform.Find("Player").GetComponent<PlayerHealth>() != null)
+            if(col.transform.Find("Player") != null)
             {
+                animator.SetTrigger("Attack");
+                target = col.transform;
                 col.transform.Find("Player").GetComponent<PlayerHealth>().GiveDamage(1);
             }
         }

@@ -45,6 +45,7 @@ public class PlayerHealth : MonoBehaviour
     void takeDamageUI()
     {
         healthHearts.SetHealth(health.getHealth());
+        transform.parent.GetComponent<Animator>().SetTrigger("Damage");
     }
 
     
