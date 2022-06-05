@@ -9,8 +9,6 @@ public class MainMenuBtns : MonoBehaviour
     [SerializeField] Canvas tutorialMenu;
     [SerializeField] string gameSceneName;
 
-
-
     public void OnClickTutorial()
     {
         MainMenu.gameObject.SetActive(false);

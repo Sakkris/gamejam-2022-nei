@@ -23,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (health.getHealth() <= 0)
         {
+            GameOverHandler.instance.OnDie();
             Debug.Log("Dead");
         }
 
