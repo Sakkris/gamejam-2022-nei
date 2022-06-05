@@ -13,26 +13,31 @@ public class GameOverHandler : MonoBehaviour
     [SerializeField] string thisSceneName;
     [SerializeField] Canvas UI;
     [SerializeField] Canvas gameOverCanvas;
-    [SerializeField] Image image;
-    [SerializeField] Image image1;
+    [SerializeField] Canvas backgroundCanvas;
+    CanvasGroup canvasGroup;
+    CanvasGroup canvasbackGroup;
 
     private void Awake()
     {
         instance = this;
+        canvasGroup = gameOverCanvas.GetComponent<CanvasGroup>();
+        canvasbackGroup = backgroundCanvas.GetComponent<CanvasGroup>();
     }
     public void OnClickRetry()
     {
-        SceneManager.LoadScene(thisSceneName);
-    }    
+        StartCoroutine(ClickRetry());
+
+    }
     public void OnClickQuit()
     {
-        SceneManager.LoadScene(menuSceneName);
+        StartCoroutine(ClickQuit());
     }
 
     public void OnDie()
     {
         UI.gameObject.SetActive(false);
         gameOverCanvas.gameObject.SetActive(true);
+        backgroundCanvas.gameObject.SetActive(true);
         StartCoroutine(FadeImage(false));
        
     }
@@ -45,8 +50,7 @@ public class GameOverHandler : MonoBehaviour
             for (float i = 1; i >= 0; i -= Time.deltaTime)
             {
                 // set color with i as alpha
-                image.color = new Color(1, 1, 1, i);
-                image1.color = new Color(1, 1, 1, i);
+                canvasGroup.alpha = i;
                 yield return null;
             }
         }
@@ -57,10 +61,46 @@ public class GameOverHandler : MonoBehaviour
             for (float i = 0; i <= 1; i += Time.deltaTime)
             {
                 // set color with i as alpha
-                image.color = new Color(1, 1, 1, i);
-                image1.color = new Color(1, 1, 1, i);
+                if (i > 0.98)
+                {
+                    canvasbackGroup.alpha = 1;
+                }
+                else
+                {
+                    canvasbackGroup.alpha = i;
+                }
+
+            yield return null;
+            }
+            // loop over 1 second
+            for (float i = 0; i <= 1; i += Time.deltaTime)
+            {
+                if (i > 0.98)
+                {
+                    canvasGroup.alpha = 1;
+                    yield break;
+                }
+                else
+                {
+                    canvasGroup.alpha = i;
+                }
+                
                 yield return null;
             }
         }
+    }
+
+    IEnumerator ClickQuit()
+    {
+        GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(menuSceneName);
+
+    }
+    IEnumerator ClickRetry()
+    {
+        GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(thisSceneName);
     }
 }
