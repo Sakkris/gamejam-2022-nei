@@ -54,7 +54,7 @@ public class AttackPosition : MonoBehaviour
         mainCharacter.GetComponent<Animator>().SetTrigger("Attack");
         string facing = mainCharacter.GetComponent<PlayerMovement>().getFacing();
         hitSound.Play();
-        yield return new WaitForSeconds(0.80f);
+        yield return new WaitForSeconds(0.50f);
         Collider2D[] objectsInRadious = Physics2D.OverlapCircleAll(thisPosition.position, attackRange, layerMask);
         float shortestDistance = 1000000;
         Collider2D shortestObject = null;
