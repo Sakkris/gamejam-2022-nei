@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int maxHealth = 3;
+    [SerializeField] AudioSource damageTaken;
     [SerializeField] HealthHearts healthHearts;
     private HealthSystem health;
     private float invul_time = 1;
@@ -37,6 +38,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if(invul_cooldown <= 0) { 
             health.GiveDamage(i);
+            damageTaken.Play();
             takeDamageUI();
             invul_cooldown = invul_time;
         }
