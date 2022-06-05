@@ -17,7 +17,10 @@ public class EnemyMovment : MonoBehaviour {
 
     private HealthSystem health;
     [SerializeField] Material material;
-
+    [SerializeField] float knockbackSpeed = 2f;
+    bool atacked = false;
+    string facingAttack;
+    bool dead = false;
     private void Awake()
     {
         health = new HealthSystem(1);
@@ -51,6 +54,10 @@ public class EnemyMovment : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, lastPosition, speed * Time.deltaTime);
             }
         }
+        if (atacked)
+        {
+            KnockBack();
+        }
         CheckHealth();
     }
     
@@ -58,12 +65,41 @@ public class EnemyMovment : MonoBehaviour {
     {
         if(health.getHealth()<= 0)
         {
+            dead = true;
             StartCoroutine(Die());
         }
     }
-    public void Damage(int i)
+    public void Damage(int i, string facing)
     {
+        atacked = true;
+        facingAttack = facing;
+        
         health.GiveDamage(i);
+    }
+
+    private void KnockBack()
+    {
+        Vector2 knockPosition;
+        if (facingAttack.Equals("north"))
+        {
+            knockPosition = new Vector2(transform.position.x, transform.position.y + 1);
+            transform.position = Vector3.MoveTowards(transform.position, knockPosition, knockbackSpeed * Time.deltaTime);
+        }
+        if (facingAttack.Equals("south"))
+        {
+            knockPosition = new Vector2(transform.position.x, transform.position.y - 1);
+            transform.position = Vector3.MoveTowards(transform.position, knockPosition, knockbackSpeed * Time.deltaTime);
+        }
+        if (facingAttack.Equals("east"))
+        {
+            knockPosition = new Vector2(transform.position.x + 1, transform.position.y);
+            transform.position = Vector3.MoveTowards(transform.position, knockPosition, knockbackSpeed * Time.deltaTime);
+        }
+        if (facingAttack.Equals("west"))
+        {
+            knockPosition = new Vector2(transform.position.x - 1, transform.position.y);
+            transform.position = Vector3.MoveTowards(transform.position, knockPosition, knockbackSpeed * Time.deltaTime);
+        }
     }
 
     private void Flip(float x)
@@ -93,6 +129,7 @@ public class EnemyMovment : MonoBehaviour {
         exited = false;
         if (col.gameObject.CompareTag("Player"))
         {
+            print(col.gameObject.name);
             StartCoroutine(TimerToAttack(col));
         }
     }
@@ -118,14 +155,14 @@ public class EnemyMovment : MonoBehaviour {
 
     IEnumerator TimerToAttack(Collision2D col)
     {
-        print(exited);
-        yield return new WaitForSeconds(0.55f);
+        yield return new WaitForSeconds(1f);
         if(!exited){
-            if(col.transform.Find("Player") != null)
+            CheckHealth();
+            if (!dead)
             {
                 animator.SetTrigger("Attack");
-                target = col.transform;
-                col.transform.Find("Player").GetComponent<PlayerHealth>().GiveDamage(1);
+                target = GameObject.Find("Player").transform;
+                GameObject.Find("Player").GetComponent<PlayerHealth>().GiveDamage(1);
             }
         }
     }
