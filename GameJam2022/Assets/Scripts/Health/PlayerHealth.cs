@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] int maxHealth = 3;
     [SerializeField] AudioSource damageTaken;
     [SerializeField] HealthHearts healthHearts;
+    [SerializeField] AudioSource FoodpickUpSound;
     private HealthSystem health;
     private float invul_time = 1;
     private float invul_cooldown;
@@ -25,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
         if (health.getHealth() <= 0)
         {
             GameOverHandler.instance.OnDie();
-            Debug.Log("Dead");
+            Destroy(gameObject);
         }
 
         if(invul_cooldown > 0)
@@ -46,6 +47,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void GiveHealth(int i)
     {
+        FoodpickUpSound.Play();
         if (health.getHealth() == maxHealth)
             return;
 

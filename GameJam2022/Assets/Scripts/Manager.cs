@@ -5,6 +5,8 @@ public class Manager : MonoBehaviour
 {
 	public static Manager instance = null;
 	public GameObject enemy;
+	public GameObject speedPowerup;
+	public GameObject healthup;
 	public Transform Min;
 	public Transform Max;
 	public int score = 0;
@@ -12,6 +14,7 @@ public class Manager : MonoBehaviour
 	private int score_per_second = 500;
 	private int score_per_enemy = 2000;
 	private int numberSpawns = 2;
+	private int itemSpawn = 1;
 
 	void Awake()
 	{
@@ -30,7 +33,7 @@ public class Manager : MonoBehaviour
 	{
 		score = 0;
 		InvokeRepeating("Spawn_Enemies", 0.0f, 7.5f);
-
+		InvokeRepeating("spawnItems", 10f, 25f);
 	}
 
 	private void Update()
@@ -43,6 +46,15 @@ public class Manager : MonoBehaviour
 		score += score_per_enemy;
 	}
 
+	private void spawnItems()
+    {
+		Vector2 spawnPosition = new Vector2(Random.Range(Min.position.x, Max.position.x), Random.Range(Min.position.y, Max.position.y));		
+		
+		if(Random.Range(0f,2f) > 1)
+			Instantiate(speedPowerup, spawnPosition, Quaternion.identity);
+		else
+			Instantiate(healthup, spawnPosition, Quaternion.identity);
+	}
 	private void Spawn_Enemies()
 	{
 		for (int i = 0; i < Mathf.Log(numberSpawns); i++) {
