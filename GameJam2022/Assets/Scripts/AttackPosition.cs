@@ -8,6 +8,7 @@ public class AttackPosition : MonoBehaviour
     [SerializeField] Transform thisPosition;
     [SerializeField] GameObject mainCharacter;
     [SerializeField] float attackRange = 0.5f;
+    [SerializeField] AudioSource hitSound;
     public LayerMask layerMask;
     bool ableToAttack = true;
 
@@ -52,6 +53,7 @@ public class AttackPosition : MonoBehaviour
         mainCharacter.GetComponent<PlayerMovement>().setMovementSpeed(0.5f);
         mainCharacter.GetComponent<Animator>().SetTrigger("Attack");
         string facing = mainCharacter.GetComponent<PlayerMovement>().getFacing();
+        hitSound.Play();
         yield return new WaitForSeconds(0.80f);
         Collider2D[] objectsInRadious = Physics2D.OverlapCircleAll(thisPosition.position, attackRange, layerMask);
         float shortestDistance = 1000000;

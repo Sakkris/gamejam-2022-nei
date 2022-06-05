@@ -7,6 +7,8 @@ public class EnemyMovment : MonoBehaviour {
     public float speed = 10.0f;
     public Rigidbody2D rb;
     public Animator animator;
+    [SerializeField] AudioSource hitSound;
+    [SerializeField] AudioSource atackSound;
 
     private bool side = true;
     private Transform target;
@@ -77,6 +79,7 @@ public class EnemyMovment : MonoBehaviour {
         facingAttack = facing;
         
         health.GiveDamage(i);
+        hitSound.Play();
     }
 
     private void KnockBack()
@@ -159,8 +162,10 @@ public class EnemyMovment : MonoBehaviour {
 
     IEnumerator TimerToAttack(Collision2D col)
     {
-        yield return new WaitForSeconds(0.8f);
-        if(!exited){
+        yield return new WaitForSeconds(0.5f);
+        atackSound.Play();
+        yield return new WaitForSeconds(0.3f);
+        if (!exited){
             CheckHealth();
             if (!dead)
             {
