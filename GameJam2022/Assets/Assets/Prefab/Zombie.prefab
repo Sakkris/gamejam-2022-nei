@@ -169,6 +169,8 @@ MonoBehaviour:
   animator: {fileID: 1872714869751970948}
   material: {fileID: 2100000, guid: 05a36b182f97dac45a88f6f71325339c, type: 2}
   knockbackSpeed: 2
+  knockbackSprite: {fileID: 21300000, guid: 3c9b72297aad02f48a19411ab9f0b47b, type: 3}
+  deadSprite: {fileID: 21300000, guid: 92c576ea75dbee74497802a76c949f2d, type: 3}
 --- !u!50 &1872714869751970944
 Rigidbody2D:
   serializedVersion: 4

@@ -18,6 +18,8 @@ public class EnemyMovment : MonoBehaviour {
     private HealthSystem health;
     [SerializeField] Material material;
     [SerializeField] float knockbackSpeed = 2f;
+    [SerializeField] Sprite knockbackSprite;
+    [SerializeField] Sprite deadSprite;
     bool atacked = false;
     string facingAttack;
     bool dead = false;
@@ -79,6 +81,8 @@ public class EnemyMovment : MonoBehaviour {
 
     private void KnockBack()
     {
+        Destroy(gameObject.GetComponent<Animator>());
+        GetComponent<SpriteRenderer>().sprite = knockbackSprite;
         Vector2 knockPosition;
         if (facingAttack.Equals("north"))
         {
@@ -145,9 +149,9 @@ public class EnemyMovment : MonoBehaviour {
     IEnumerator Die()
     {
         yield return new WaitForSeconds(0.5f);
+        GetComponent<SpriteRenderer>().sprite = deadSprite;
         Manager.instance.enemyDeath();
         speed = 0;
-        GetComponent<Animator>().speed = 0;
         gameObject.GetComponent<SpriteRenderer>().material = material;
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
@@ -155,7 +159,7 @@ public class EnemyMovment : MonoBehaviour {
 
     IEnumerator TimerToAttack(Collision2D col)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
         if(!exited){
             CheckHealth();
             if (!dead)
